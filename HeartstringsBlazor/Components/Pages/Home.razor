@@ -1,0 +1,254 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using HeartstringsBlazor
+
+<PageTitle>Heartstrings: Cozy Bonds & Friendship Haven</PageTitle>
+
+<div class="heartstrings-app">
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="logo-box">
+            <span class="heart-icon">💖</span>
+            <h1>Heartstrings</h1>
+        </div>
+        <p class="tagline">Cozy Bonds & Structural Design Patterns Web Engine</p>
+    </header>
+
+    <div class="main-layout">
+        <!-- Navigation Menu -->
+        <nav class="nav-sidebar">
+            <button class="@(activeTab == 1 ? "active" : "")" @onclick="() => SetTab(1)">1. Adapter</button>
+            <button class="@(activeTab == 2 ? "active" : "")" @onclick="() => SetTab(2)">2. Bridge</button>
+            <button class="@(activeTab == 3 ? "active" : "")" @onclick="() => SetTab(3)">3. Composite</button>
+            <button class="@(activeTab == 4 ? "active" : "")" @onclick="() => SetTab(4)">4. Decorator</button>
+            <button class="@(activeTab == 5 ? "active" : "")" @onclick="() => SetTab(5)">5. Facade</button>
+            <button class="@(activeTab == 6 ? "active" : "")" @onclick="() => SetTab(6)">6. Flyweight</button>
+            <button class="@(activeTab == 7 ? "active" : "")" @onclick="() => SetTab(7)">7. Proxy</button>
+        </nav>
+
+        <!-- Active Interactive Workbench -->
+        <main class="workbench-content">
+            @if (activeTab == 1)
+            {
+                <div class="pattern-card">
+                    <h3>Adapter: Vintage Keepsake Diary to Digital Feed</h3>
+                    <p class="desc">Translates incompatible handwritten diary archives into modern live social feed events.</p>
+                    <button class="action-btn" @onclick="RunAdapterDemo">Scan Keepsake Diary Entry</button>
+                </div>
+            }
+            else if (activeTab == 2)
+            {
+                <div class="pattern-card">
+                    <h3>Bridge: Gestures & Emotional Delivery Styles</h3>
+                    <p class="desc">Decouples the gesture abstraction from the emotional vibe implementor so both vary independently.</p>
+                    
+                    <div class="input-row">
+                        <label>Friendship Gesture:</label>
+                        <select @bind="selectedGesture">
+                            <option value="Hug">Cozy Bear Hug</option>
+                            <option value="Compliment">Heartfelt Compliment</option>
+                        </select>
+                    </div>
+
+                    <div class="input-row">
+                        <label>Emotional Delivery:</label>
+                        <select @bind="selectedVibe">
+                            <option value="Comfort">Gentle Comfort Vibe</option>
+                            <option value="Playful">Playful Energy Vibe</option>
+                        </select>
+                    </div>
+
+                    <button class="action-btn" @onclick="RunBridgeDemo">Share Friendship Gesture</button>
+                </div>
+            }
+            else if (activeTab == 3)
+            {
+                <div class="pattern-card">
+                    <h3>Composite: Friendship Circles & Community Groups</h3>
+                    <p class="desc">Treats individual besties and nested circles uniformly within a hierarchical social tree.</p>
+                    <button class="action-btn" @onclick="RunCompositeDemo">Audit Social Circle Hierarchy</button>
+                </div>
+            }
+            else if (activeTab == 4)
+            {
+                <div class="pattern-card">
+                    <h3>Decorator: Layering Keepsakes onto Friendship Cards</h3>
+                    <p class="desc">Dynamically decorates a base card with keepsake attachments at runtime to boost bond affinity.</p>
+                    <div class="status-badge">
+                        <strong>Current Card:</strong> @activeCard.GetCardDescription() <br />
+                        <strong>Affinity Score:</strong> @activeCard.GetHeartAffinity() pts
+                    </div>
+                    <div class="btn-group">
+                        <button class="action-btn" @onclick="AddBraceletKeepsake">+ Beaded Bracelet (+45 pts)</button>
+                        <button class="action-btn" @onclick="AddLocketKeepsake">+ Photo Locket (+60 pts)</button>
+                        <button class="secondary-btn" @onclick="ResetCard">Reset Card</button>
+                    </div>
+                </div>
+            }
+            else if (activeTab == 5)
+            {
+                <div class="pattern-card">
+                    <h3>Facade: Hosting a Cozy Slumber Party</h3>
+                    <p class="desc">Provides a simple single-call interface to orchestrate lighting, lofi music, and sweet treats.</p>
+                    <button class="action-btn" @onclick="RunFacadeDemo">Host Slumber Party (Single Call)</button>
+                </div>
+            }
+            else if (activeTab == 6)
+            {
+                <div class="pattern-card">
+                    <h3>Flyweight: Thousands of Floating Hug Hearts</h3>
+                    <p class="desc">Shares intrinsic sprite and shader memory profiles across thousands of individual floating particle instances.</p>
+                    <button class="action-btn" @onclick="RunFlyweightDemo">Spawn 2,000 Floating Hearts</button>
+                </div>
+            }
+            else if (activeTab == 7)
+            {
+                <div class="pattern-card">
+                    <h3>Proxy: Inner Circle Secret Sanctuary Access</h3>
+                    <p class="desc">Enforces a 500+ follower bond affinity requirement and lazy-loads the private memory scrapbook.</p>
+                    <div class="input-row">
+                        <label>Mutual Bond Affinity (0 - 1000):</label>
+                        <input type="number" min="0" max="1000" step="50" @bind="bondScoreInput" />
+                    </div>
+                    <button class="action-btn" @onclick="RunProxyDemo">Unlock Secret Sanctuary</button>
+                </div>
+            }
+        </main>
+    </div>
+
+    <!-- Live Execution Telemetry Feed -->
+    <section class="telemetry-panel">
+        <div class="telemetry-header">
+            <h4>Real-Time Pattern Execution & Event Feed</h4>
+            <button class="clear-btn" @onclick="ClearLogs">Clear Feed</button>
+        </div>
+        <div class="terminal-log">
+            @if (logs.Count == 0)
+            {
+                <span class="placeholder-text">Click any pattern action above to trigger live C# architecture execution...</span>
+            }
+            else
+            {
+                @foreach (var log in logs)
+                {
+                    <div class="log-entry">@log</div>
+                }
+            }
+        </div>
+    </section>
+</div>
+
+@code {
+    private int activeTab = 1;
+    private List<string> logs = new List<string>();
+
+    // Bridge State
+    private string selectedGesture = "Hug";
+    private string selectedVibe = "Comfort";
+
+    // Decorator State
+    private IFriendshipCard activeCard = new BaseAffectionCard();
+
+    // Proxy State
+    private int bondScoreInput = 350;
+
+    private void SetTab(int tab) => activeTab = tab;
+
+    private void Log(string message)
+    {
+        logs.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {message}");
+    }
+
+    private void ClearLogs() => logs.Clear();
+
+    // 1. Adapter
+    private void RunAdapterDemo()
+    {
+        var diary = new HandwrittenDiaryNote();
+        IFriendshipMomentScanner adapter = new DiaryMemoryAdapter(diary);
+        Log(adapter.LogMemoryMoment());
+    }
+
+    // 2. Bridge
+    private void RunBridgeDemo()
+    {
+        IBondVibe vibe = selectedVibe == "Comfort" ? new GentleComfortVibe() : new PlayfulEnergyVibe();
+        FriendlyGesture gesture = selectedGesture == "Hug" ? new WarmHugGesture(vibe) : new SincereComplimentGesture(vibe);
+
+        Log("[Bridge Execution] " + gesture.ShareInteraction());
+    }
+
+    // 3. Composite
+    private void RunCompositeDemo()
+    {
+        var studyBesties = new FriendshipCircle("Study & Coffee Besties");
+        studyBesties.AddMember(new CloseFriend("Maya", 120));
+        studyBesties.AddMember(new CloseFriend("Chloe", 140));
+
+        var gamingSquad = new FriendshipCircle("Cozy Gaming Squad");
+        gamingSquad.AddMember(new CloseFriend("Oliver", 95));
+        gamingSquad.AddMember(new CloseFriend("Zoe", 110));
+
+        var masterCommunity = new FriendshipCircle("Inner Haven Friendship Community");
+        masterCommunity.AddMember(studyBesties);
+        masterCommunity.AddMember(gamingSquad);
+        masterCommunity.AddMember(new CloseFriend("Emma (Childhood Bestie)", 350));
+
+        Log($"Total Composite Bond Points: {masterCommunity.CalculateTotalBondPoints():N0} pts!");
+        Log(masterCommunity.DisplayFriendTree(0));
+    }
+
+    // 4. Decorator
+    private void AddBraceletKeepsake()
+    {
+        activeCard = new HandmadeBraceletKeepsake(activeCard);
+        Log($"[Decorator Attached] Added Handmade Bracelet -> New Score: {activeCard.GetHeartAffinity()} pts");
+    }
+
+    private void AddLocketKeepsake()
+    {
+        activeCard = new MemoryLocketKeepsake(activeCard);
+        Log($"[Decorator Attached] Added Memory Locket -> New Score: {activeCard.GetHeartAffinity()} pts");
+    }
+
+    private void ResetCard()
+    {
+        activeCard = new BaseAffectionCard();
+        Log("[Decorator Reset] Returned card to base state.");
+    }
+
+    // 5. Facade
+    private void RunFacadeDemo()
+    {
+        var facade = new SlumberPartyGatheringFacade();
+        var steps = facade.HostFriendshipSlumberParty();
+        foreach (var s in steps) Log(s);
+    }
+
+    // 6. Flyweight
+    private void RunFlyweightDemo()
+    {
+        var particles = new List<ActiveHeartParticle>();
+        var rnd = new Random();
+
+        for (int i = 0; i < 2000; i++)
+        {
+            string color = i % 2 == 0 ? "Warm Blush Pink" : "Golden Honey Glow";
+            string sprite = i % 2 == 0 ? "heart_hug_bubble.png" : "sparkle_star_heart.png";
+            string shader = i % 2 == 0 ? "SoftGlowAdditive" : "RainbowShimmerBlend";
+
+            var flyweight = HeartParticleFactory.GetHeartType(color, sprite, shader);
+            particles.Add(new ActiveHeartParticle(rnd.Next(0, 1920), rnd.Next(0, 1080), rnd.NextDouble() * 2.0, flyweight));
+        }
+
+        Log($"[Flyweight Optimization] Spawned {particles.Count:N0} heart particles using only {HeartParticleFactory.CachedParticleProfilesCount} unique memory objects!");
+        Log($"Sample Render: {particles[0].Draw()}");
+    }
+
+    // 7. Proxy
+    private void RunProxyDemo()
+    {
+        ISecretSanctuary proxy = new BestiesSanctuaryProxy("Starlight Treehouse Sanctuary", bondScoreInput);
+        Log(proxy.EnterSanctuary());
+    }
+}
