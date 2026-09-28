@@ -41,4 +41,4 @@ Heartstrings demonstrates how to build modular, decoupled web architectures by m
 ### Running the App
 1. Clone this repository:
    ```bash
-   git clone [https://github.com/](https://github.com/)<your-username>/HeartstringsBlazor.git
+   git clone https://github.com/Tlhoko04/HeartstringsBlazor.git
